@@ -9,8 +9,9 @@
      
     </el-tooltip>
     <div class="button">
-        <el-button @click="transform">加密</el-button>
-        <el-button @click="transform1">解码</el-button>
+
+        <el-button @click="transform" type="primary" plain>加密</el-button>
+        <el-button @click="transform1" type="success" plain>解码</el-button>
     </div>
         
 
@@ -62,11 +63,17 @@ export default {
   transform() {
     this.base(this.str);
     this.content = this.base64;
+      if(this.content.length){    //只有有内容的时候才能出现加密成功
+      this.open1();
+    }
   },
 
   transform1(){
     this.decode(this.str);
     this.content = this.decoded;
+     if(this.content.length){
+      this.open2();
+    }
   },
 
 base:function (str){
@@ -131,8 +138,15 @@ base:function (str){
         }
     }
     this.base64 = base;
+  
+    
   },
-
+ open1(){
+      this.$message({message:'加密成功',type:'success'});
+    },
+ open2(){
+      this.$message({message:'解码成功',type:'success'});
+    },
   decode:function(str){
 
     let map = new Map([["A",0],["B",1],["C",2],["D",3],["E",4],["F",5],["G",6],["H",7],["I",8],["J",9],["K",10],["L",11],["M",12],["N",13],["O",14],
@@ -201,9 +215,8 @@ base:function (str){
     }
     
     this.decoded = laststr;
-
+    
   }
-
 }
 }
 </script>
@@ -232,14 +245,14 @@ base:function (str){
 .output{
 
   width: 600px;
-  height: 200px;
-  margin-top: 20px;
+  height: 160px;
+  margin-top: 10px;
   border: 1px solid black;
   border-radius: 6px;
 }
 
 .text{
-  margin-top: 30px;
+  margin-top: 20px;
   text-align: center;
 }
 </style>
